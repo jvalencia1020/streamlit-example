@@ -63,58 +63,66 @@ st.button("Generate Plan")
 ############################################################################################
 
 data = [
-    [
-        [10.0, 8.04],
-        [8.0, 6.95],
-        [13.0, 7.58],
-        [9.0, 8.81],
-        [11.0, 8.33],
-        [14.0, 9.96],
-        [6.0, 7.24],
-        [4.0, 4.26],
-        [12.0, 10.84],
-        [7.0, 4.82],
-        [5.0, 5.68],
-    ],
-    [
-        [10.0, 9.14],
-        [8.0, 8.14],
-        [13.0, 8.74],
-        [9.0, 8.77],
-        [11.0, 9.26],
-        [14.0, 8.10],
-        [6.0, 6.13],
-        [4.0, 3.10],
-        [12.0, 9.13],
-        [7.0, 7.26],
-        [5.0, 4.74],
-    ],
-    [
-        [10.0, 7.46],
-        [8.0, 6.77],
-        [13.0, 12.74],
-        [9.0, 7.11],
-        [11.0, 7.81],
-        [14.0, 8.84],
-        [6.0, 6.08],
-        [4.0, 5.39],
-        [12.0, 8.15],
-        [7.0, 6.42],
-        [5.0, 5.73],
-    ],
-    [
-        [8.0, 6.58],
-        [8.0, 5.76],
-        [8.0, 7.71],
-        [8.0, 8.84],
-        [8.0, 8.47],
-        [8.0, 7.04],
-        [8.0, 5.25],
-        [19.0, 12.50],
-        [8.0, 5.56],
-        [8.0, 7.91],
-        [8.0, 6.89],
-    ],
+    [3.275154, 2.957587],
+    [-3.344465, 2.603513],
+    [0.355083, -3.376585],
+    [1.852435, 3.547351],
+    [-2.078973, 2.552013],
+    [-0.993756, -0.884433],
+    [2.682252, 4.007573],
+    [-3.087776, 2.878713],
+    [-1.565978, -1.256985],
+    [2.441611, 0.444826],
+    [-0.659487, 3.111284],
+    [-0.459601, -2.618005],
+    [2.17768, 2.387793],
+    [-2.920969, 2.917485],
+    [-0.028814, -4.168078],
+    [3.625746, 2.119041],
+    [-3.912363, 1.325108],
+    [-0.551694, -2.814223],
+    [2.855808, 3.483301],
+    [-3.594448, 2.856651],
+    [0.421993, -2.372646],
+    [1.650821, 3.407572],
+    [-2.082902, 3.384412],
+    [-0.718809, -2.492514],
+    [4.513623, 3.841029],
+    [-4.822011, 4.607049],
+    [-0.656297, -1.449872],
+    [1.919901, 4.439368],
+    [-3.287749, 3.918836],
+    [-1.576936, -2.977622],
+    [3.598143, 1.97597],
+    [-3.977329, 4.900932],
+    [-1.79108, -2.184517],
+    [3.914654, 3.559303],
+    [-1.910108, 4.166946],
+    [-1.226597, -3.317889],
+    [1.148946, 3.345138],
+    [-2.113864, 3.548172],
+    [0.845762, -3.589788],
+    [2.629062, 3.535831],
+    [-1.640717, 2.990517],
+    [-1.881012, -2.485405],
+    [4.606999, 3.510312],
+    [-4.366462, 4.023316],
+    [0.765015, -3.00127],
+    [3.121904, 2.173988],
+    [-4.025139, 4.65231],
+    [-0.559558, -3.840539],
+    [4.376754, 4.863579],
+    [-1.874308, 4.032237],
+    [-0.089337, -3.026809],
+    [3.997787, 2.518662],
+    [-3.082978, 2.884822],
+    [0.845235, -3.454465],
+    [1.327224, 3.358778],
+    [-2.889949, 3.596178],
+    [-0.966018, -2.839827],
+    [2.960769, 3.079555],
+    [-3.275518, 1.577068],
+    [0.639276, -3.41284]
 ]
 
 line_opt = {
@@ -127,108 +135,196 @@ line_opt = {
     ],
 }
 
+CLUSTER_COUNT = 6
+DIENSIION_CLUSTER_INDEX = 2
+COLOR_ALL = [
+    '#37A2DA',
+    '#e06343',
+    '#37a354',
+    '#b55dba',
+    '#b5bd48',
+    '#8378EA',
+    '#96BFFF'
+]
+pieces = []
+for i in range(0, CLUSTER_COUNT):
+    pieces.append({
+        'value': i,
+        'label': 'cluster ' + str(i),
+        'color': COLOR_ALL[i]
+    })
+
 option = {
-    "title": {"text": "Anscombe's quartet", "left": "center", "top": 0},
-    "grid": [
-        {"left": "7%", "top": "7%", "width": "38%", "height": "38%"},
-        {"right": "7%", "top": "7%", "width": "38%", "height": "38%"},
-        {"left": "7%", "bottom": "7%", "width": "38%", "height": "38%"},
-        {"right": "7%", "bottom": "7%", "width": "38%", "height": "38%"},
+    "dataset": [
+        {
+            "source": data,
+        },
+        {
+            "transform": {
+                "type": 'ecStat:clustering',
+                "config": {
+                    "clusterCount": CLUSTER_COUNT,
+                    "outputType": 'single',
+                    "outputClusterIndexDimension": DIENSIION_CLUSTER_INDEX
+                }
+            }
+        }
     ],
-    "tooltip": {"formatter": "Group {a}: ({c})"},
-    "xAxis": [
-        {"gridIndex": 0, "min": 0, "max": 20},
-        {"gridIndex": 1, "min": 0, "max": 20},
-        {"gridIndex": 2, "min": 0, "max": 20},
-        {"gridIndex": 3, "min": 0, "max": 20},
-    ],
-    "yAxis": [
-        {"gridIndex": 0, "min": 0, "max": 15},
-        {"gridIndex": 1, "min": 0, "max": 15},
-        {"gridIndex": 2, "min": 0, "max": 15},
-        {"gridIndex": 3, "min": 0, "max": 15},
-    ],
+    "title": {"text": "Plan Performance", "left": "center", "top": 0},
+    "tooltip": {"position": 'top'},
+    "visualMap": {
+        "type": 'piecewise',
+        "top": 'middle',
+        "min": 0,
+        "max": CLUSTER_COUNT,
+        "left": 10,
+        "splitNumber": CLUSTER_COUNT,
+        "dimension": DIENSIION_CLUSTER_INDEX,
+        "pieces": pieces
+      },
+    "grid": {
+        "left": 120
+    },
+    "xAxis": {},
+    "yAxis": {},
     "series": [
         {
             "name": "I",
             "type": "scatter",
-            "xAxisIndex": 0,
-            "yAxisIndex": 0,
-            "data": data[0],
-            "markLine": line_opt,
-        },
-        {
-            "name": "II",
-            "type": "scatter",
-            "xAxisIndex": 1,
-            "yAxisIndex": 1,
-            "data": data[1],
-            "markLine": line_opt,
-        },
-        {
-            "name": "III",
-            "type": "scatter",
-            "xAxisIndex": 2,
-            "yAxisIndex": 2,
-            "data": data[2],
-            "markLine": line_opt,
-        },
-        {
-            "name": "IV",
-            "type": "scatter",
-            "xAxisIndex": 3,
-            "yAxisIndex": 3,
-            "data": data[3],
-            "markLine": line_opt,
+            "encode": {
+                "tooltip": [0, 1]
+            },
+            "symbolSize": 15,
+            "itemStyle": {
+                "borderControl": '#555'
+            },
+            "datasetIndex": 1
         },
     ],
 }
-st_echarts(options=option, height="600px")
-
-
 
 # data = [
-#     [10.0, 8.04],
-#     [8.0, 6.95],
-#     [13.0, 7.58],
-#     [9.0, 8.81],
-#     [11.0, 8.33],
-#     [14.0, 9.96],
-#     [6.0, 7.24],
-#     [4.0, 4.26],
-#     [12.0, 10.84],
-#     [7.0, 4.82],
-#     [5.0, 5.68],
+#     [
+#         [10.0, 8.04],
+#         [8.0, 6.95],
+#         [13.0, 7.58],
+#         [9.0, 8.81],
+#         [11.0, 8.33],
+#         [14.0, 9.96],
+#         [6.0, 7.24],
+#         [4.0, 4.26],
+#         [12.0, 10.84],
+#         [7.0, 4.82],
+#         [5.0, 5.68],
+#     ],
+#     [
+#         [10.0, 9.14],
+#         [8.0, 8.14],
+#         [13.0, 8.74],
+#         [9.0, 8.77],
+#         [11.0, 9.26],
+#         [14.0, 8.10],
+#         [6.0, 6.13],
+#         [4.0, 3.10],
+#         [12.0, 9.13],
+#         [7.0, 7.26],
+#         [5.0, 4.74],
+#     ],
+#     [
+#         [10.0, 7.46],
+#         [8.0, 6.77],
+#         [13.0, 12.74],
+#         [9.0, 7.11],
+#         [11.0, 7.81],
+#         [14.0, 8.84],
+#         [6.0, 6.08],
+#         [4.0, 5.39],
+#         [12.0, 8.15],
+#         [7.0, 6.42],
+#         [5.0, 5.73],
+#     ],
+#     [
+#         [8.0, 6.58],
+#         [8.0, 5.76],
+#         [8.0, 7.71],
+#         [8.0, 8.84],
+#         [8.0, 8.47],
+#         [8.0, 7.04],
+#         [8.0, 5.25],
+#         [19.0, 12.50],
+#         [8.0, 5.56],
+#         [8.0, 7.91],
+#         [8.0, 6.89],
+#     ],
 # ]
-# data.sort(key=lambda x: x[0])
-# x_data = [d[0] for d in data]
-# y_data = [d[1] for d in data]
 #
-# b = (
-#     Scatter()
-#         .add_xaxis(xaxis_data=x_data)
-#         .add_yaxis(
-#         series_name="",
-#         y_axis=y_data,
-#         symbol_size=20,
-#         label_opts=opts.LabelOpts(is_show=False),
-#     )
-#         .set_series_opts()
-#         .set_global_opts(
-#         xaxis_opts=opts.AxisOpts(
-#             type_="value", splitline_opts=opts.SplitLineOpts(is_show=True)
-#         ),
-#         yaxis_opts=opts.AxisOpts(
-#             type_="value",
-#             axistick_opts=opts.AxisTickOpts(is_show=True),
-#             splitline_opts=opts.SplitLineOpts(is_show=True),
-#         ),
-#         tooltip_opts=opts.TooltipOpts(is_show=False),
-#     ))
+# line_opt = {
+#     "animation": False,
+#     "label": {"formatter": "y = 0.5 * x + 3", "align": "right"},
+#     "lineStyle": {"type": "solid"},
+#     "tooltip": {"formatter": "y = 0.5 * x + 3"},
+#     "data": [
+#         [{"coord": [0, 3], "symbol": None}, {"coord": [20, 13], "symbol": None}]
+#     ],
+# }
 #
-# st_pyecharts(
-#     b, key="echarts"
-# )  # Add key argument to not remount component at every Streamlit run
+# option = {
+#     "title": {"text": "Anscombe's quartet", "left": "center", "top": 0},
+#     "grid": [
+#         {"left": "7%", "top": "7%", "width": "38%", "height": "38%"},
+#         {"right": "7%", "top": "7%", "width": "38%", "height": "38%"},
+#         {"left": "7%", "bottom": "7%", "width": "38%", "height": "38%"},
+#         {"right": "7%", "bottom": "7%", "width": "38%", "height": "38%"},
+#     ],
+#     "tooltip": {"formatter": "Group {a}: ({c})"},
+#     "xAxis": [
+#         {"gridIndex": 0, "min": 0, "max": 20},
+#         {"gridIndex": 1, "min": 0, "max": 20},
+#         {"gridIndex": 2, "min": 0, "max": 20},
+#         {"gridIndex": 3, "min": 0, "max": 20},
+#     ],
+#     "yAxis": [
+#         {"gridIndex": 0, "min": 0, "max": 15},
+#         {"gridIndex": 1, "min": 0, "max": 15},
+#         {"gridIndex": 2, "min": 0, "max": 15},
+#         {"gridIndex": 3, "min": 0, "max": 15},
+#     ],
+#     "series": [
+#         {
+#             "name": "I",
+#             "type": "scatter",
+#             "xAxisIndex": 0,
+#             "yAxisIndex": 0,
+#             "data": data[0],
+#             "markLine": line_opt,
+#         },
+#         {
+#             "name": "II",
+#             "type": "scatter",
+#             "xAxisIndex": 1,
+#             "yAxisIndex": 1,
+#             "data": data[1],
+#             "markLine": line_opt,
+#         },
+#         {
+#             "name": "III",
+#             "type": "scatter",
+#             "xAxisIndex": 2,
+#             "yAxisIndex": 2,
+#             "data": data[2],
+#             "markLine": line_opt,
+#         },
+#         {
+#             "name": "IV",
+#             "type": "scatter",
+#             "xAxisIndex": 3,
+#             "yAxisIndex": 3,
+#             "data": data[3],
+#             "markLine": line_opt,
+#         },
+#     ],
+# }
+st_echarts(options=option, height="600px")
 
 
 ############################################################################################
