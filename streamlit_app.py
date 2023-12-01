@@ -170,8 +170,9 @@ option = {
             }
         }
     ],
-    "title": {"text": "Plan Performance", "left": "center", "top": 0},
-    "tooltip": {"position": 'top'},
+    "tooltip": {
+        "position": 'top'
+    },
     "visualMap": {
         "type": 'piecewise',
         "top": 'middle',
@@ -181,15 +182,14 @@ option = {
         "splitNumber": CLUSTER_COUNT,
         "dimension": DIENSIION_CLUSTER_INDEX,
         "pieces": pieces
-      },
+    },
     "grid": {
         "left": 120
     },
     "xAxis": {},
     "yAxis": {},
-    "series": [
+    "series":
         {
-            "name": "I",
             "type": "scatter",
             "encode": {
                 "tooltip": [0, 1]
@@ -199,8 +199,7 @@ option = {
                 "borderControl": '#555'
             },
             "datasetIndex": 1
-        },
-    ],
+        }
 }
 
 # data = [
