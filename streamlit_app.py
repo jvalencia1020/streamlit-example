@@ -29,9 +29,33 @@ st.date_input('Start Date')
 st.date_input('End Date')
 
 st.title('Model Selection:')
-st.selectbox('Goal', ["Margin","Clearance", "Conversion Rate", "Top of Funnel", "Mid Funnel", "Lower Funnel"])
-st.number_input('Enter a goal value')
+st.selectbox('Goal 1', ["Margin","Clearance", "Conversion Rate", "Top of Funnel", "Mid Funnel", "Lower Funnel"])
+col1, col2 = st.columns(2)
+with col1:
+    st.number_input('Enter Goal 1 min value')
 
+with col2:
+    st.number_input('Enter Goal 1 max value')
+
+st.divider()
+
+st.selectbox('Goal 2', ["Margin","Clearance", "Conversion Rate", "Top of Funnel", "Mid Funnel", "Lower Funnel"])
+col3, col4 = st.columns(2)
+with col3:
+    st.number_input('Enter Goal 2 min value')
+
+with col4:
+    st.number_input('Enter Goal 2 max value')
+
+st.divider()
+
+st.selectbox('Goal N', ["Margin","Clearance", "Conversion Rate", "Top of Funnel", "Mid Funnel", "Lower Funnel"])
+col5, col6 = st.columns(2)
+with col5:
+    st.number_input('Enter Goal N min value')
+
+with col6:
+    st.number_input('Enter Goal N max value')
 # num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
 # num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
 #
@@ -274,7 +298,7 @@ line_opt = {
 }
 
 option = {
-    "title": {"text": "Plan Scenarios", "left": "center", "top": 0},
+    "title": {},
     "grid": [
         {"left": "7%", "top": "7%", "width": "38%", "height": "38%"},
         {"right": "7%", "top": "7%", "width": "38%", "height": "38%"},
@@ -366,6 +390,7 @@ option = {
 # }
 # st_echarts(options=options, height="600px")
 
+st.title("Plan Scenarios")
 st_echarts(options=option, height="600px")
 
 
@@ -516,7 +541,7 @@ gb.configure_grid_options(domLayout='normal')
 gridOptions = gb.build()
 
 # Display the grid
-st.header("Plan Recommendations")
+st.title("Plan Recommendations")
 st.markdown("""
     Below are your plan recommendations for 11/20/2023 through 12/10/2023!
 """)
