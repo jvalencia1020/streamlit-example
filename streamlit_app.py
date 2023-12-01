@@ -161,21 +161,21 @@ option = {
         },
         {
             "transform": {
-                "type": 'ecStat:clustering',
+                "type": "ecStat:clustering",
                 "config": {
                     "clusterCount": CLUSTER_COUNT,
-                    "outputType": 'single',
+                    "outputType": "single",
                     "outputClusterIndexDimension": DIENSIION_CLUSTER_INDEX
                 }
             }
         }
     ],
     "tooltip": {
-        "position": 'top'
+        "position": "top"
     },
     "visualMap": {
-        "type": 'piecewise',
-        "top": 'middle',
+        "type": "piecewise",
+        "top": "middle",
         "min": 0,
         "max": CLUSTER_COUNT,
         "left": 10,
@@ -196,7 +196,7 @@ option = {
             },
             "symbolSize": 15,
             "itemStyle": {
-                "borderControl": '#555'
+                "borderControl": "#555"
             },
             "datasetIndex": 1
         }
