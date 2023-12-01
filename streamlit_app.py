@@ -576,3 +576,5 @@ selected_df = pd.DataFrame(selected).apply(pd.to_numeric, errors='coerce')
 #         Ag-Grid documentation can be read [here](https://www.ag-grid.com/documentation)
 #     """)
 #     st.write(gridOptions)
+
+st.button("Generate Buys")
