@@ -6,7 +6,7 @@ import numpy as np
 import altair as alt
 from itertools import cycle
 
-from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode, JsCode
+from st_aggrid import GridOptionsBuilder, AgGrid, GridUpdateMode, DataReturnMode, JsCode, ColumnsAutoSizeMode
 from pyecharts.charts import Bar, Scatter
 from pyecharts import options as opts
 from streamlit_echarts import st_echarts, st_pyecharts
@@ -16,37 +16,49 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+# st.set_page_config(initial_sidebar_state="collapsed")
+
 """
 # SmartSpot Demo UI
 """
 
-num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+st.title('Media Plan Inputs:')
+st.selectbox('Channel', ["TV","Radio"])
+st.selectbox('Campaign', ["Campaign 1","Campaign 2", "Campaign 4"])
+st.date_input('Start Date')
+st.date_input('End Date')
 
-indices = np.linspace(0, 1, num_points)
-theta = 2 * np.pi * num_turns * indices
-radius = indices
+st.title('Model Selection:')
+st.selectbox('Goal', ["Margin","Clearance", "Conversion Rate", "Top of Funnel", "Mid Funnel", "Lower Funnel"])
+st.number_input('Enter a goal value')
 
-x = radius * np.cos(theta)
-y = radius * np.sin(theta)
-
-df = pd.DataFrame({
-    "x": x,
-    "y": y,
-    "idx": indices,
-    "rand": np.random.randn(num_points),
-})
-
-st.altair_chart(alt.Chart(df, height=700, width=700)
-    .mark_point(filled=True)
-    .encode(
-    x=alt.X("x", axis=None),
-    y=alt.Y("y", axis=None),
-    color=alt.Color("idx", legend=None, scale=alt.Scale()),
-    size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-))
-
-np.random.seed(42)
+# num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
+# num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+#
+# indices = np.linspace(0, 1, num_points)
+# theta = 2 * np.pi * num_turns * indices
+# radius = indices
+#
+# x = radius * np.cos(theta)
+# y = radius * np.sin(theta)
+#
+# df = pd.DataFrame({
+#     "x": x,
+#     "y": y,
+#     "idx": indices,
+#     "rand": np.random.randn(num_points),
+# })
+#
+# st.altair_chart(alt.Chart(df, height=700, width=700)
+#     .mark_point(filled=True)
+#     .encode(
+#     x=alt.X("x", axis=None),
+#     y=alt.Y("y", axis=None),
+#     color=alt.Color("idx", legend=None, scale=alt.Scale()),
+#     size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
+# ))
+#
+# np.random.seed(42)
 
 st.button("Generate Plan")
 
@@ -262,7 +274,7 @@ line_opt = {
 }
 
 option = {
-    "title": {"text": "Anscombe's quartet", "left": "center", "top": 0},
+    "title": {"text": "Plan Scenarios", "left": "center", "top": 0},
     "grid": [
         {"left": "7%", "top": "7%", "width": "38%", "height": "38%"},
         {"right": "7%", "top": "7%", "width": "38%", "height": "38%"},
@@ -392,7 +404,7 @@ def fetch_data(samples):
 st.sidebar.subheader("St-AgGrid example options")
 
 sample_size = st.sidebar.number_input("rows", min_value=10, value=30)
-grid_height = st.sidebar.number_input("Grid height", min_value=200, max_value=800, value=300)
+grid_height = st.sidebar.number_input("Grid height", min_value=200, max_value=800, value=500)
 
 return_mode = st.sidebar.selectbox("Return Mode", list(DataReturnMode.__members__), index=1)
 return_mode_value = DataReturnMode.__members__[return_mode]
@@ -504,7 +516,7 @@ gb.configure_grid_options(domLayout='normal')
 gridOptions = gb.build()
 
 # Display the grid
-st.header("Plan Recommendatiosn")
+st.header("Plan Recommendations")
 st.markdown("""
     Below are your plan recommendations for 11/20/2023 through 12/10/2023!
 """)
@@ -518,7 +530,7 @@ grid_response = AgGrid(
     update_mode=update_mode_value,
     fit_columns_on_grid_load=fit_columns_on_grid_load,
     allow_unsafe_jscode=True,  # Set it to True to allow jsfunction to be injected
-    enable_enterprise_modules=enable_enterprise_modules
+    enable_enterprise_modules=enable_enterprise_modules,
 )
 
 df = grid_response['data']
